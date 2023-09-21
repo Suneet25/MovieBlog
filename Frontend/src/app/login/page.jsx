@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import GoogleButton from "react-google-button";
 import { useRouter } from "next/navigation";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import Link from "next/link";
@@ -31,17 +32,22 @@ function Login() {
     });
     if (!error) {
       setError(null);
+      console.log("LOGINDATA",data)
       router.push("/");
     }
     if (error) {
       setError(error);
+      alert(error.message)
       console.log("ERROR", error);
     }
     console.log("LOGIN SUBMITTED", { email, password });
   };
 
 
-
+//LoginWithGoogle
+let handleGoogleLogin=()=>{
+  console.log("Logged in with google");
+}
 
 
   //logout
@@ -90,6 +96,13 @@ function Login() {
             className="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out"
           >
             Login
+          </button>
+          <br/>
+<hr/>
+<br/>
+          <button  className="w-full flex justify-center  text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out">
+
+          <GoogleButton  className="w-[100%]" onClick={handleGoogleLogin}/>
           </button>
           {!error ? (
             <button

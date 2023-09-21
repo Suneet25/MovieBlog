@@ -25,15 +25,19 @@ function page() {
     event.preventDefault();
 
     // sends a sign up request to supabase email provider
-    let res = await supabase.auth.signUp({
+    let {data,error} = await supabase.auth.signUp({
       email,
       password,
       options: {
         emailRedirectTo: `${location.origin}/api/auth/callback`,
       },
     });
+    if(error){
 
-    if (res) {
+      alert(error.message)
+    }
+    if (data) {
+      console.log("DATA",data);
       router.push("/login");
     }
 
