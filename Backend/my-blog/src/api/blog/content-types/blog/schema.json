@@ -60,9 +60,29 @@
       "required": true
     },
     "Rating": {
-      "type": "integer",
-      "required": true,
-      "max": 6
+      "type": "biginteger",
+      "required": true
+    },
+    "Budget": {
+      "type": "biginteger"
+    },
+    "Revenue": {
+      "type": "biginteger"
+    },
+    "Status": {
+      "type": "string"
+    },
+    "OriginalLanguage": {
+      "type": "string"
+    },
+    "Runtime": {
+      "type": "biginteger"
+    },
+    "ReleaseDate": {
+      "type": "date"
+    },
+    "Country": {
+      "type": "string"
     }
   }
 }

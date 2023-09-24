@@ -390,11 +390,14 @@ export interface ApiBlogBlog extends Schema.CollectionType {
     FeaturedImage: Attribute.Media;
     Content: Attribute.String;
     slug: Attribute.String & Attribute.Required;
-    Rating: Attribute.Integer &
-      Attribute.Required &
-      Attribute.SetMinMax<{
-        max: 6;
-      }>;
+    Rating: Attribute.BigInteger & Attribute.Required;
+    Budget: Attribute.BigInteger;
+    Revenue: Attribute.BigInteger;
+    Status: Attribute.String;
+    OriginalLanguage: Attribute.String;
+    Runtime: Attribute.BigInteger;
+    ReleaseDate: Attribute.Date;
+    Country: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

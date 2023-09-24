@@ -2,6 +2,7 @@
 import { useState } from "react";
 import GoogleButton from "react-google-button";
 import { useRouter } from "next/navigation";
+import { FaGithub, FaGoogle } from "react-icons/fa";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import Link from "next/link";
 
@@ -32,28 +33,30 @@ function Login() {
     });
     if (!error) {
       setError(null);
-      console.log("LOGINDATA",data)
+      console.log("LOGINDATA", data);
       router.push("/");
     }
     if (error) {
       setError(error);
-      alert(error.message)
+      alert(error.message);
       console.log("ERROR", error);
     }
     console.log("LOGIN SUBMITTED", { email, password });
   };
 
-
-//LoginWithGoogle
-let handleGoogleLogin=()=>{
-  console.log("Logged in with google");
-}
-
+  //LoginWithGoogle
+  let handleGoogleLogin = () => {
+    console.log("Logged in with google");
+  };
 
   //logout
   let handleLogout = async (event) => {
     event.preventDefault();
     let { error } = await supabase.auth.signOut();
+    if (!error) {
+      router.push("/login");
+    }
+    console.log("Logout error", error);
   };
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -70,7 +73,7 @@ let handleGoogleLogin=()=>{
               name="email"
               value={email}
               onChange={handleEmailChange}
-              className="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1 focus:outline-none focus:ring focus:ring-indigo-200"
+              className="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1 focus:outline-none focus:ring focus:ring-indigo-200  bg-white text-black"
               required
             />
           </div>
@@ -87,7 +90,7 @@ let handleGoogleLogin=()=>{
               name="password"
               value={password}
               onChange={handlePasswordChange}
-              className="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1 focus:outline-none focus:ring focus:ring-indigo-200"
+              className=" bg-white text-black w-full border border-gray-300 rounded-lg py-2 px-3 mt-1 focus:outline-none focus:ring focus:ring-indigo-200"
               required
             />
           </div>
@@ -97,17 +100,12 @@ let handleGoogleLogin=()=>{
           >
             Login
           </button>
-          <br/>
-<hr/>
-<br/>
-          <button  className="w-full flex justify-center  text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out">
-
-          <GoogleButton  className="w-[100%]" onClick={handleGoogleLogin}/>
-          </button>
+        
+      
           {!error ? (
             <button
               type="submit"
-              className="w-full bg-red-500  hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out mt-3"
+              className="w-full bg-red-500  hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out mt-5"
               onClick={handleLogout}
             >
               Logout
@@ -115,9 +113,33 @@ let handleGoogleLogin=()=>{
           ) : (
             ""
           )}
+              <div className="flex place-content-evenly items-center gap-10 mt-5" >
+            <div >
+              <button
+                onClick={""}
+                className="  bg-gray-800 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded-lg flex items-center"
+              >
+                <div className="flex content-between items-center">
+                  <FaGithub className="mr-2 " />
+                  <span> Github</span>
+                </div>
+              </button>
+            </div>
+
+            <div >
+              <button
+                onClick={handleGoogleLogin}
+                className="text-center  flex items-center space-x-2 bg-blue-600 font-semibold text-white py-2 px-4 rounded-lg"
+              >
+                <FaGoogle className="text-xl" />
+                <span>Google</span>
+              </button>
+            </div>
+          </div>
         </form>
         <p className="mt-5">
-          Not an user <Link className="text-blue-500 hover:text-blue-700" href={"/sign_up"}>
+          Not an user{" "}
+          <Link className="text-blue-500 hover:text-blue-700" href={"/sign_up"}>
             Signup
           </Link>
         </p>

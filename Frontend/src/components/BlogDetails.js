@@ -2,22 +2,27 @@
 import Image from "next/image";
 import React from "react";
 import { AiFillStar } from "react-icons/ai";
+import config from "@/config";
 let Genres = ["Scifi", "Adventure", "Action"];
 
-const BlogDetails = () => {
+const BlogDetails = ({ blog }) => {
+  console.log("HHH", blog);
+    
   return (
-    <div className="max-w-7xl m-auto mt-10">
-      <h1 className="font-semibold text-3xl">Blog Details Page</h1>
-      <div className="flex flex-wrap gap-x-40 mt-5">
+    <div className="max-w-7xl m-auto  py-5 px-5 lg:px-0">
+      <h1 className="font-semibold text-3xl"></h1>
+      <div className="flex flex-wrap gap-x-40 mt-5 ">
         <div className="h-90 w-90 rounded-lg overflow-hidden">
           <Image
-            src={"http://127.0.0.1:1337/uploads/small_image3_e273a1da95.webp"}
-            width={400}
+            src={`${config.api}${blog.attributes.Thumbnail.data.attributes.url}`}
+            layout="fixed"
+            width={500}
             height={400}
+            style={{width:"400px",height:"600px"}}
           />
         </div>
         <div className="w-[600px]">
-          <h1 className="font-bold text-4xl">Interstellar</h1>
+          <h1 className="font-bold text-4xl">{blog.attributes.Title}</h1>
 
           {/* Genre */}
           <div className="mt-3">
@@ -38,36 +43,62 @@ const BlogDetails = () => {
           {/* Overview */}
           <div className="mt-5">
             <h2 className="font-semibold">Overview</h2>
-            <p className="mt-3">
-        Barbie and Ken are having the time of their lives in the colorful and
-        seemingly perfect world of Barbie Land. However, when they get a chance
-        to go to the real world, they soon discover the joys and perils of
-        living among humans
-      </p>
+            <div
+              className="mt-3"
+              dangerouslySetInnerHTML={{ __html: blog.attributes.Content }}
+            ></div>
           </div>
 
           {/* About */}
           <div className="mt-5">
-          <h2 className="font-semibold">About</h2>
-            <p className="mt-3">
-        Barbie and Ken are having the time of their lives in the colorful and
-        seemingly perfect world of Barbie Land. However, when they get a chance
-        to go to the real world, they soon discover the joys and perils of
-        living among humans
-      </p>
+            <h2 className="font-semibold">About</h2>
+            <p className="mt-3">{blog.attributes.Summury}</p>
           </div>
           {/* Others */}
           <div className="mt-5">
+            <h2 className="font-semibold">Others</h2>
+            <div className="mt-5 grid lg:grid-cols-2 grid-cols-1 gap-3 ">
+              <div className="flex items-center justify-between shadow-lg px-2 py-2 rounded-lg">
+                <p className="text-teal-500 font-semibold">Budget :-</p>
 
-          
-          <h2 className="font-semibold">Others</h2>
-     <div>
-        
-     </div>
-      </div> 
+                <p className="text-gray-700">{blog.attributes.Budget}</p>
+              </div>
+              <div className="flex items-center justify-between shadow-lg px-2 py-2 rounded-lg">
+                <p className="text-teal-500 font-semibold">Status :-</p>
+                <p className="text-gray-700">{blog.attributes.Status}</p>
+              </div>
+              <div className="flex items-center justify-between shadow-lg px-2 py-2 rounded-lg">
+                <p className="text-teal-500 font-semibold">Runtime :-</p>
+                <p className="text-gray-700">{blog.attributes.Runtime}</p>
+              </div>
+              <div className="flex items-center justify-between shadow-lg px-2 py-2 rounded-lg">
+                <p className="text-teal-500 font-semibold">Release Date :-</p>
+                <p className="text-gray-700">{blog.attributes.ReleaseDate}</p>
+              </div>
+              <div className="flex items-center justify-between shadow-lg px-2 py-2 rounded-lg">
+                <p className="text-teal-500 font-semibold">Revenue :-</p>
+                <p className="text-gray-700">{blog.attributes.Revenue}</p>
+              </div>
+              <div className="flex items-center justify-between shadow-lg px-2 py-2 rounded-lg">
+                <p className="text-teal-500 font-semibold">
+                  Original Language :-
+                </p>
+                <p className="text-gray-700">
+                  {blog.attributes.OriginalLanguage}
+                </p>
+              </div>
+              <div className="flex items-center justify-between shadow-lg px-2 py-2 rounded-lg">
+                <p className="text-teal-500 font-semibold">Rating :-</p>
+                <p className="text-gray-700">{blog.attributes.Rating}</p>
+              </div>
+              <div className="flex items-center justify-between shadow-lg px-2 py-2 rounded-lg">
+                <p className="text-teal-500 font-semibold">Country :-</p>
+                <p className="text-gray-700">{blog.attributes.Country}</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    
     </div>
   );
 };

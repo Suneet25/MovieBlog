@@ -25,19 +25,18 @@ function page() {
     event.preventDefault();
 
     // sends a sign up request to supabase email provider
-    let {data,error} = await supabase.auth.signUp({
+    let { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
         emailRedirectTo: `${location.origin}/api/auth/callback`,
       },
     });
-    if(error){
-
-      alert(error.message)
+    if (error) {
+      alert(error.message);
     }
     if (data) {
-      console.log("DATA",data);
+      console.log("DATA", data);
       router.push("/login");
     }
 
@@ -59,7 +58,7 @@ function page() {
               name="email"
               value={email}
               onChange={handleEmailChange}
-              className="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1 focus:outline-none focus:ring focus:ring-indigo-200"
+              className="bg-white text-black w-full border border-gray-300 rounded-lg py-2 px-3 mt-1 focus:outline-none focus:ring focus:ring-indigo-200"
               required
             />
           </div>
@@ -76,7 +75,7 @@ function page() {
               name="password"
               value={password}
               onChange={handlePasswordChange}
-              className="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1 focus:outline-none focus:ring focus:ring-indigo-200"
+              className="w-full border  border-gray-300 rounded-lg py-2 px-3 mt-1  focus:outline-none focus:ring focus:ring-indigo-200 bg-white text-black"
               required
             />
           </div>
