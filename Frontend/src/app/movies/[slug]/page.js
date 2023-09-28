@@ -1,9 +1,9 @@
 import BlogDetails from "@/components/BlogDetails";
 import React from "react";
-import { fetchBlogs } from "@/components/helpers/fetch-blogs";
+import { fetchBlogs } from "@/helpers/fetch-blogs";
 
 const page = async (props) => {
-  let blog = await fetchBlogs(`&filters[slug][$eq]=interstellar`);
+  let blog = await fetchBlogs(`&filters[slug][$eq]=${props.params.slug}`);
 console.log("MOVIEBLOG",blog);
   return (
     <BlogDetails

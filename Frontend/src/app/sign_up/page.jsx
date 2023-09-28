@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import createClient from "../../../utils/supabase-browser";
 function page() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -11,8 +11,7 @@ function page() {
   let router = useRouter();
 
   // instantiate supabase client
-  const supabase = createClientComponentClient();
-
+  let [supabase] = useState(() => createClient());
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
   };
@@ -37,6 +36,7 @@ function page() {
     }
     if (data) {
       console.log("DATA", data);
+      alert("Sign up successful");
       router.push("/login");
     }
 

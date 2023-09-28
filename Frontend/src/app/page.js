@@ -1,16 +1,17 @@
-import { fetchBlogs } from "@/components/helpers/fetch-blogs";
+import { fetchBlogs } from "@/helpers/fetch-blogs";
 import config from "@/config";
 import Image from "next/image";
 import React from "react";
-import { Image1 } from "../Assets/HeroImage1.jpg";
-import { movieBlogs } from "@/components/data";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { movieBlogs } from "@/helpers/data";
+import { analytics } from "../../utils/firebase";
 
-const Home = async (props) => {
+const Home = async () => {
   let blogs = await fetchBlogs(`&filters[Category][$eq]=Anime`);
   let blogMovies = await fetchBlogs(`&filters[Category][$eq]=Movie`);
-
+console.log(analytics);
   return (
-    <div className="max-w-7xl m-auto py-10 font-semibold text-5xl text-center px-10">
+    <div className="max-w-7xl m-auto py-10 font-semibold  text-4xl lg:text-5xl text-center px-10">
       <h1>Top 5 Movie Blogs for Film Fans to Follow</h1>
       <div className="rounded-lg overflow-hidden mt-10  ">
         <img

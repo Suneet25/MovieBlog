@@ -3,19 +3,23 @@ import Image from "next/image";
 import Logo from "../Assets/Logo.webp";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
-import React, { useState } from "react";
-import style from "../app/styles/navbar.module.css"
+import React, { useEffect, useState } from "react";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { useAuth } from "./providers/supabase-auth-provider";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   let [category, setCategory] = useState("");
-  const router = useRouter();
+
+  let { signOut, user, serverSession } = useAuth();
+
   const path = usePathname();
-  console.log("PATH", path);
+  let router = useRouter();
+
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
-
+  console.log("NAVBAR", serverSession);
   return (
     <nav className="bg-amber-50 p-4 sticky top-0 z-10 shadow-lg ">
       <div className="max-w-7xl m-auto ">
@@ -26,20 +30,19 @@ const Navbar = () => {
             </Link>
           </div>
           <div className="hidden md:flex items-center space-x-6 font-bold">
-      
             <Link
               href={`/${category}`}
               className="text-black"
               style={{
-                borderBottom: path === "/animes" && "/movies"  ? "3px solid orange" : "",
+                borderBottom:
+                  path === "/animes" || "/movies" ? "3px solid orange" : "",
               }}
-              class={style.navHead}
             >
               <select
                 className="bg-amber-50"
                 onChange={(e) => setCategory(e.target.value)}
               >
-                <option disabled selected>
+                <option disabled defaultValue={"Categories"}>
                   Categories
                 </option>
                 <option value={"movies"}>Movies</option>
@@ -52,7 +55,6 @@ const Navbar = () => {
               style={{
                 borderBottom: path === "/about" ? "3px solid orange" : "",
               }}
-              
             >
               About
             </Link>
@@ -66,21 +68,57 @@ const Navbar = () => {
             >
               Contact
             </Link>
-            <button
-              onClick={() => router.push("/login")}
-              className="text-black font-bold bg-amber-50 py-1 px-2 rounded-lg"
-              style={{
-                borderBottom: path === "/login" ? "3px solid orange" : "",
-              }}
-            >
-              Login
-            </button>
-            <button
-              onClick={() => router.push("/sign_up")}
-              className="text-white font-bold bg-orange-500 py-1 px-2 rounded-lg"
-            >
-              Signup
-            </button>
+            {user ? (
+              <div className="flex justify-center items-center gap-5">
+                <div>
+                  <button
+                    onClick={signOut}
+                    className="text-white font-bold bg-orange-500 py-1 px-2 rounded-lg"
+                    style={{
+                      borderBottom: path === "/login" ? "3px solid orange" : "",
+                    }}
+                  >
+                    Logout
+                  </button>
+                </div>
+                {serverSession?.user?.app_metadata?.provider === "github" ||
+                serverSession?.user?.app_metadata?.provider === "google" ? (
+                  <div
+                    className="avatar cursor-pointer"
+                    onClick={() => router.push("/profile")}
+                  >
+                    <div className="w-8 rounded-full ring ring-primary ring-offset-base-100 ring-orange-500 ring-offset-2">
+                      <Image
+                        src={user?.avatar_url}
+                        alt="avatar"
+                        width={200}
+                        height={200}
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  ""
+                )}
+              </div>
+            ) : (
+              <div className="flex justify-center items-center gap-4">
+                <button
+                  onClick={() => router.push("/login")}
+                  className="text-black font-bold bg-amber-50 py-1 px-2 rounded-lg"
+                  style={{
+                    borderBottom: path === "/login" ? "3px solid orange" : "",
+                  }}
+                >
+                  Login
+                </button>
+                <button
+                  onClick={() => router.push("/sign_up")}
+                  className="text-white font-bold bg-orange-500 py-1 px-2 rounded-lg"
+                >
+                  Signup
+                </button>
+              </div>
+            )}
           </div>
           <div className="md:hidden flex items-center">
             <button

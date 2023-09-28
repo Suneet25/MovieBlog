@@ -5,7 +5,7 @@ export let fetchBlogs = async (filter) => {
       Authorization: `Bearer ${process.env.API_TOKEN}`,
     },
   };
-  let request = await fetch(`${config.api}/api/blogs?populate=*${filter}`, reqOption);
+  let request = await fetch(`${config.api}/api/blogs?populate=*&${filter}&per_page=25`, reqOption);
   let response = await request.json();
   return response.data;
 };

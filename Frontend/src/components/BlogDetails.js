@@ -1,13 +1,11 @@
 "use client";
 import Image from "next/image";
 import React from "react";
-import { AiFillStar } from "react-icons/ai";
+
 import config from "@/config";
 let Genres = ["Scifi", "Adventure", "Action"];
 
 const BlogDetails = ({ blog }) => {
-  console.log("HHH", blog);
-    
   return (
     <div className="max-w-7xl m-auto  py-5 px-5 lg:px-0">
       <h1 className="font-semibold text-3xl"></h1>
@@ -18,7 +16,7 @@ const BlogDetails = ({ blog }) => {
             layout="fixed"
             width={500}
             height={400}
-            style={{width:"400px",height:"600px"}}
+            style={{ width: "400px", height: "600px" }}
           />
         </div>
         <div className="w-[600px]">

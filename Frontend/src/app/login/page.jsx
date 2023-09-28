@@ -1,20 +1,19 @@
 "use client";
-import { useState } from "react";
-import GoogleButton from "react-google-button";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { FaGithub, FaGoogle } from "react-icons/fa";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import Link from "next/link";
+import { useAuth } from "@/components/providers/supabase-auth-provider";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState(null);
+  const { signInWithPassword, signInWithGithub, signInWithGoogle, user } =
+    useAuth();
 
   let router = useRouter();
-
-  // instantiate supabase client
-  const supabase = createClientComponentClient();
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -26,38 +25,26 @@ function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email: email,
-      password: password,
-    });
-    if (!error) {
-      setError(null);
-      console.log("LOGINDATA", data);
+    try {
+      const { data, error } = await signInWithPassword(email, password);
+      if (!error) {
+        setError(null);
+        console.log("LOGINDATA", data);
+      }
+      if (error) {
+        setError(error);
+      }
+      console.log("LOGIN SUBMITTED", { email, password });
+    } catch (error) {
+      console.log("Somthing went wrong while login with email");
+    }
+  };
+  useEffect(() => {
+    if (user) {
       router.push("/");
     }
-    if (error) {
-      setError(error);
-      alert(error.message);
-      console.log("ERROR", error);
-    }
-    console.log("LOGIN SUBMITTED", { email, password });
-  };
+  }, [user]);
 
-  //LoginWithGoogle
-  let handleGoogleLogin = () => {
-    console.log("Logged in with google");
-  };
-
-  //logout
-  let handleLogout = async (event) => {
-    event.preventDefault();
-    let { error } = await supabase.auth.signOut();
-    if (!error) {
-      router.push("/login");
-    }
-    console.log("Logout error", error);
-  };
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-md w-full sm:w-96">
@@ -100,23 +87,11 @@ function Login() {
           >
             Login
           </button>
-        
-      
-          {!error ? (
-            <button
-              type="submit"
-              className="w-full bg-red-500  hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out mt-5"
-              onClick={handleLogout}
-            >
-              Logout
-            </button>
-          ) : (
-            ""
-          )}
-              <div className="flex place-content-evenly items-center gap-10 mt-5" >
-            <div >
+
+          <div className="flex place-content-evenly items-center gap-10 mt-5">
+            <div>
               <button
-                onClick={""}
+                onClick={signInWithGithub}
                 className="  bg-gray-800 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded-lg flex items-center"
               >
                 <div className="flex content-between items-center">
@@ -126,9 +101,9 @@ function Login() {
               </button>
             </div>
 
-            <div >
+            <div>
               <button
-                onClick={handleGoogleLogin}
+                onClick={signInWithGoogle}
                 className="text-center  flex items-center space-x-2 bg-blue-600 font-semibold text-white py-2 px-4 rounded-lg"
               >
                 <FaGoogle className="text-xl" />

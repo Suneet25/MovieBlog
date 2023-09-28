@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
-import { footerData, footerSocials } from "./data";
+import { footerData, footerSocials } from "../helpers/data";
 
 const Footer = () => {
   let router = useRouter();
@@ -10,11 +10,7 @@ const Footer = () => {
     <footer className="footer footer-center p-10 bg-base-200 text-base-content rounded">
       <nav className="grid grid-flow-col gap-4">
         {footerData.map((data) => (
-          <a
-            key={data.id}
-            className="link link-hover"
-          href={data.href}
-          >
+          <a key={data.id} className="link link-hover" href={data.href}>
             {data.title}
           </a>
         ))}
@@ -23,7 +19,7 @@ const Footer = () => {
         <div className="grid grid-flow-col gap-4">
           {footerSocials.map((social) => {
             return (
-              <a key={social.id}>
+              <a key={social.id} >
                 <svg
                   xmlns={social.xmlns}
                   width={social.width}
