@@ -5,9 +5,10 @@ import Image from "next/image";
 
 const Profile = () => {
   let { user, serverSession, signOut } = useAuth();
+
   return (
     <div>
-      <div className="max-w-7xl m-auto flex flex-col justify-center items-center py-20 px-10 gap-10">
+      <div className="max-w-7xl m-auto flex flex-col md:flex-row lg:flex-row justify-center items-center py-20 px-10 gap-10">
         <div className="card card-side bg-white-100 shadow-xl">
           <figure>
             <Image
@@ -18,21 +19,23 @@ const Profile = () => {
               alt="profileImage"
             />
           </figure>
+        </div>
+        <div>
           <div className="card-body">
             <h2 className="card-title">
-              Name:-{" "}
+              Name:-
               {serverSession?.user?.app_metadata?.provider === "github"
                 ? serverSession.user.user_metadata.full_name
                 : ""}
             </h2>
             <p>
-              Email:-{" "}
+              Email:-
               {serverSession?.user?.app_metadata?.provider === "github"
                 ? serverSession.user.user_metadata.email
                 : ""}
             </p>
             <p>
-              Email verified:-{" "}
+              Email verified:-
               {serverSession?.user?.app_metadata?.provider === "github"
                 ? serverSession.user.user_metadata.email_verified === true
                   ? "Yes"

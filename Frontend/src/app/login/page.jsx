@@ -4,6 +4,8 @@ import { useRouter } from "next/navigation";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import Link from "next/link";
 import { useAuth } from "@/components/providers/supabase-auth-provider";
+import { notify } from "@/components/Alert";
+import { ToastContainer, toast } from "react-toastify";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -29,12 +31,26 @@ function Login() {
       const { data, error } = await signInWithPassword(email, password);
       if (!error) {
         setError(null);
-        console.log("LOGINDATA", data);
+        setTimeout(
+          () =>
+            toast.success("Login successful", {
+              position: "top-center",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            }),
+          1000
+        );
+
       }
       if (error) {
         setError(error);
       }
-      console.log("LOGIN SUBMITTED", { email, password });
+ 
     } catch (error) {
       console.log("Somthing went wrong while login with email");
     }
@@ -47,6 +63,7 @@ function Login() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <ToastContainer />
       <div className="bg-white p-8 rounded-lg shadow-md w-full sm:w-96">
         <h2 className="text-2xl font-semibold mb-6">Login</h2>
         <form onSubmit={handleSubmit}>
@@ -87,31 +104,31 @@ function Login() {
           >
             Login
           </button>
-
-          <div className="flex place-content-evenly items-center gap-10 mt-5">
-            <div>
-              <button
-                onClick={signInWithGithub}
-                className="  bg-gray-800 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded-lg flex items-center"
-              >
-                <div className="flex content-between items-center">
-                  <FaGithub className="mr-2 " />
-                  <span> Github</span>
-                </div>
-              </button>
-            </div>
-
-            <div>
-              <button
-                onClick={signInWithGoogle}
-                className="text-center  flex items-center space-x-2 bg-blue-600 font-semibold text-white py-2 px-4 rounded-lg"
-              >
-                <FaGoogle className="text-xl" />
-                <span>Google</span>
-              </button>
-            </div>
-          </div>
         </form>
+        <div className="flex place-content-evenly items-center gap-10 mt-5">
+          <div>
+            <button
+              onClick={signInWithGithub}
+              className="  bg-gray-800 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded-lg flex items-center"
+            >
+              <div className="flex content-between items-center">
+                <FaGithub className="mr-2 " />
+                <span> Github</span>
+              </div>
+            </button>
+          </div>
+
+          <div>
+            <button
+              onClick={signInWithGoogle}
+              className="text-center  flex items-center space-x-2 bg-blue-600 font-semibold text-white py-2 px-4 rounded-lg"
+            >
+              <FaGoogle className="text-xl" />
+              <span>Google</span>
+            </button>
+          </div>
+        </div>
+
         <p className="mt-5">
           Not an user{" "}
           <Link className="text-blue-500 hover:text-blue-700" href={"/sign_up"}>

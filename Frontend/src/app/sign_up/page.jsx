@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import createClient from "../../../utils/supabase-browser";
+import { ToastContainer, toast } from "react-toastify";
 function page() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -32,19 +33,45 @@ function page() {
       },
     });
     if (error) {
-      alert(error.message);
+      setTimeout(
+        () =>
+          toast.error(error.message, {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          }),
+        1000
+      );
     }
     if (data) {
       console.log("DATA", data);
-      alert("Sign up successful");
+      setTimeout(
+        () =>
+          toast.success("signup successful", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          }),
+        1000
+      );
       router.push("/login");
     }
 
-    console.log("Submitted:", { email, password });
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <ToastContainer />
       <div className="bg-white p-8 rounded-lg shadow-md w-full sm:w-96">
         <h2 className="text-2xl font-semibold mb-6">Sign-up</h2>
         <form onSubmit={handleSubmit}>

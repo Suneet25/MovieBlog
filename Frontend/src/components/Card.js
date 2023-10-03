@@ -2,7 +2,7 @@
 import Image from "next/image";
 import React from "react";
 import { useRouter } from "next/navigation";
-// import { logEvent, analytics } from "@firebase/analytics";
+import { analytics,logEvent } from "@/app/firebase";
 
 const Card = ({ imageUrl, category, title, href,index }) => {
   let router = useRouter();
@@ -24,8 +24,8 @@ const Card = ({ imageUrl, category, title, href,index }) => {
         <button
           className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full"
           onClick={() => {
-            // console.log(index,"got clicked")
-            // logEvent(analytics, `test firebase analytics_${index}`);
+          
+            logEvent(analytics, `test firebase analytics_${title}`);
             router.push(href);
           }}
         >

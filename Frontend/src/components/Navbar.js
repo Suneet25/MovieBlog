@@ -6,6 +6,7 @@ import { useRouter, usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useAuth } from "./providers/supabase-auth-provider";
+import { analytics, logEvent } from "@/app/firebase";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -65,6 +66,12 @@ const Navbar = () => {
               style={{
                 borderBottom: path === "/contact" ? "3px solid orange" : "",
               }}
+              onClick={() =>
+                logEvent(
+                  analytics,
+                  `test firebase analytics_${"clicked on contact"}`
+                )
+              }
             >
               Contact
             </Link>
@@ -85,7 +92,13 @@ const Navbar = () => {
                 serverSession?.user?.app_metadata?.provider === "google" ? (
                   <div
                     className="avatar cursor-pointer"
-                    onClick={() => router.push("/profile")}
+                    onClick={() => {
+                      logEvent(
+                        analytics,
+                        `test firebase analytics_${"clicked on profile"}`
+                      );
+                      router.push("/profile");
+                    }}
                   >
                     <div className="w-8 rounded-full ring ring-primary ring-offset-base-100 ring-orange-500 ring-offset-2">
                       <Image

@@ -1,11 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics,logEvent } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { getAnalytics, logEvent } from "firebase/analytics";
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+//trecking id or config we get from firebase
 const firebaseConfig = {
   apiKey: "AIzaSyCHMlgCY8FRc55wSQ8Ef-rxJGBNn5YlN64",
   authDomain: "nextjs-firebaseanalytics.firebaseapp.com",
@@ -13,11 +10,16 @@ const firebaseConfig = {
   storageBucket: "nextjs-firebaseanalytics.appspot.com",
   messagingSenderId: "657850889345",
   appId: "1:657850889345:web:d8fa814d5a04eee2264980",
-  measurementId: "G-1ZGMDWW1SG"
+  measurementId: "G-1ZGMDWW1SG",
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+let analytics;
 
-export {app,analytics,logEvent};
+const app = initializeApp(firebaseConfig);
+
+if (app.name && typeof window !== "undefined") {
+  analytics = getAnalytics(app);
+}
+
+export { logEvent, analytics };
