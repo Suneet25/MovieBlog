@@ -3,6 +3,7 @@ import Image from "next/image";
 import React from "react";
 
 import config from "@/config";
+import SimilarMovieCard from "./SimilarMovieCard";
 let Genres = ["Scifi", "Adventure", "Action"];
 
 const BlogDetails = ({ blog }) => {
@@ -20,11 +21,11 @@ const BlogDetails = ({ blog }) => {
           />
         </div>
         <div className="w-[600px]">
-          <h1 className="font-bold text-4xl">{blog.attributes.Title}</h1>
+          <h1 className="font-bold text-4xl text-gray-700">{blog.attributes.Title}</h1>
 
           {/* Genre */}
           <div className="mt-3">
-            <h2 className="font-semibold">Genres</h2>
+            <h2 className="font-semibold text-orange-700">Genres</h2>
             <div className="flex gap-2 mt-3 ">
               {Genres?.map((genre, index) => {
                 return (
@@ -40,7 +41,7 @@ const BlogDetails = ({ blog }) => {
           </div>
           {/* Overview */}
           <div className="mt-5">
-            <h2 className="font-semibold">Overview</h2>
+            <h2 className="font-semibold text-orange-700">Overview</h2>
             <div
               className="mt-3"
               dangerouslySetInnerHTML={{ __html: blog.attributes.Content }}
@@ -49,7 +50,7 @@ const BlogDetails = ({ blog }) => {
 
           {/* About */}
           <div className="mt-5">
-            <h2 className="font-semibold">About</h2>
+            <h2 className="font-semibold text-orange-700">About</h2>
             <p className="mt-3">{blog.attributes.Summury}</p>
           </div>
           {/* Others */}
@@ -97,6 +98,9 @@ const BlogDetails = ({ blog }) => {
           </div>
         </div>
       </div>
+      {/* Similar Animes */}
+      <SimilarMovieCard/>
+
     </div>
   );
 };

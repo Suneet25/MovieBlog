@@ -3,6 +3,7 @@ import config from "@/config";
 import Image from "next/image";
 import React from "react";
 import { movieBlogs } from "@/helpers/data";
+import SimilarMovieCard from "@/components/SimilarMovieCard";
 
 const Home = async () => {
   let blogs = await fetchBlogs(`&filters[Category][$eq]=Anime`);
@@ -10,7 +11,7 @@ const Home = async () => {
 
   return (
     <div className="max-w-7xl m-auto py-10 font-semibold  text-4xl lg:text-5xl text-center px-10">
-      <h1>Top 5 Movie Blogs for Film Fans to Follow</h1>
+      <h1 className="text-gray-700">Top 5 Movie Blogs for Film Fans to Follow</h1>
       <div className="rounded-lg overflow-hidden mt-10  ">
         <img
           src={
@@ -33,16 +34,16 @@ const Home = async () => {
         {movieBlogs?.map((data) => {
           return (
             <div key={data.id}>
-              <h1 className="text-3xl mt-5">{data.heading}</h1>
+              <h1 className="text-3xl mt-5 text-orange-700">{data.heading}</h1>
               <div className="rounded-lg overflow-hidden mt-10">
                 <img src={data.src} width={1600} height={600} />
               </div>
-              <p className="text-lg text-black text-left">{data.content}</p>
+              <p className="text-lg text-gray-600 text-left">{data.content}</p>
             </div>
           );
         })}
       </div>
-      <h1 className="text-3xl mt-5">Animes you can follow</h1>
+      {/* <h1 className="text-3xl mt-5">Animes you can follow</h1>
       <div className="carousel rounded-box mt-5">
         <div className="carousel-item">
           {blogs.map((blog) => (
@@ -57,8 +58,8 @@ const Home = async () => {
           ))}
         </div>
       </div>
-      <h1 className="text-3xl mt-5">Movies you can follow</h1>
-      <div className="carousel rounded-box mt-5">
+      <h1 className="text-3xl mt-5">Movies you can follow</h1> */}
+      {/* <div className="carousel rounded-box mt-5">
         <div className="carousel-item">
           {blogMovies.map((blog) => (
             <Image
@@ -71,7 +72,10 @@ const Home = async () => {
             />
           ))}
         </div>
-      </div>
+      </div> */}
+      {/* <SimilarMovieCard/> */}
+     
+
     </div>
   );
 };

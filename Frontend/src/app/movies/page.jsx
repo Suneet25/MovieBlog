@@ -12,8 +12,8 @@ export default async function Home() {
   return (
     <div className="row  max-w-7xl m-auto py-10">
       <Suspense fallback={<Loading />}>
-        <h1 className="font-semibold text-3xl">Movies</h1>
-        <div className="mt-5  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+        <h1 className="font-semibold text-3xl text-gray-700">Movies</h1>
+        <div className="mt-5  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {blogs?.map((blog, index) => {
             return (
               <Card

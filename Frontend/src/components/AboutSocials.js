@@ -34,7 +34,7 @@ const AboutSocials = () => {
             className=" flex gap-5 border-2 px-5 rounded-lg border-gray-200 items-center content-center hover:border-black border-solid cursor-pointer"
           >
             <social.logo />
-            <span>{social.name}</span>
+            <span className="text-gray-700">{social.name}</span>
           </div>
         );
       })}

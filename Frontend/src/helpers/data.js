@@ -1,8 +1,9 @@
+
 export const footerData = [
-  { id: 1, title: "About Us", href: "/about-us" },
+  { id: 1, title: "About Us", href: "/about" },
   { id: 2, title: "Contact", href: "/contact" },
   { id: 3, title: "Movies", href: "/movies" },
-  { id: 4, title: "Anime", href: "/anime" },
+  { id: 4, title: "Anime", href: "/animes " },
 ];
 
 export const footerSocials = [
@@ -72,3 +73,4 @@ export const movieBlogs = [
     src: "https://observer.com/wp-content/uploads/sites/2/2021/01/the-batman-trailer.jpg?resize=768,432",
   },
 ];
+

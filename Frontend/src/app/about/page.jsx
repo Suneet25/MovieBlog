@@ -11,7 +11,7 @@ const About = async () => {
 
   return (
     <div className="max-w-7xl m-auto py-10 px-10 md:px-0 lg:px-0 ">
-      <h1 className="font-semibold text-3xl">About</h1>
+      <h1 className="font-semibold text-3xl text-gray-700">About</h1>
       <div className="mt-5 flex flex-col md:flex-row lg:flex-row gap-5">
         <div className="rounded-lg overflow-hidden shadow-lg py-10 px-10">
           <div className="rounded-lg overflow-hidden ">
@@ -35,15 +35,15 @@ const About = async () => {
               </h2>
             </div>
             <div className="mt-5 ">
-              <p>Greetings and salutations…</p>
-              <p className="mt-10">
+              <p className="text-gray-700">Greetings and salutations…</p>
+              <p className="mt-10 text-gray-700">
                 Welcome to Jason’s Movie Blog. As you guess….I’m Jason, the
                 founder, CEO, and the movie critic enthusiast behind this blog.
               </p>
-              <p className="mt-10">COMING SOON (MORE TO COME) </p>
+              <p className="mt-10 text-gray-700">COMING SOON (MORE TO COME) </p>
             </div>
             <div className="mt-5">
-              <h1 className="text-sm  font-bold ">Share this:</h1>
+              <h1 className="text-sm  font-bold text-gray-800">Share this:</h1>
               <div>
                 <AboutSocials />
               </div>
@@ -52,7 +52,7 @@ const About = async () => {
         </div>
         <div className="w-[500px] flex flex-col gap-3">
           <div className="shadow-lg rounded-lg py-10 px-8">
-            <h1 className="text-xl mt-5">Animes you can follow</h1>
+            <h1 className="text-xl mt-5 text-gray-700">Animes you can follow</h1>
             <div className="h-96  carousel carousel-vertical rounded-box mt-3">
               {blogs.map((blog) => (
                 <div className="carousel-item h-full">
@@ -69,7 +69,7 @@ const About = async () => {
             </div>
           </div>
           <div className="shadow-lg rounded-lg py-10 px-8">
-            <h1 className="text-xl mt-5">Movies you can follow</h1>
+            <h1 className="text-xl mt-5 text-gray-700">Movies you can follow</h1>
             <div className="h-96  carousel carousel-vertical rounded-box mt-3">
               {blogMovies.map((blog) => (
                 <div className="carousel-item h-full">

@@ -22,25 +22,31 @@ const Profile = () => {
         </div>
         <div>
           <div className="card-body">
-            <h2 className="card-title">
+            <h2 className=" text-orange-700">
               Name:-
-              {serverSession?.user?.app_metadata?.provider === "github"
-                ? serverSession.user.user_metadata.full_name
-                : ""}
+              <span className="text-gray-700">
+                {serverSession?.user?.app_metadata?.provider === "github"
+                  ? serverSession.user.user_metadata.full_name
+                  : ""}
+              </span>
             </h2>
-            <p>
+            <p className=" text-orange-700">
               Email:-
-              {serverSession?.user?.app_metadata?.provider === "github"
-                ? serverSession.user.user_metadata.email
-                : ""}
+              <span className="text-gray-700">
+                {serverSession?.user?.app_metadata?.provider === "github"
+                  ? serverSession.user.user_metadata.email
+                  : ""}
+              </span>
             </p>
-            <p>
-              Email verified:-
-              {serverSession?.user?.app_metadata?.provider === "github"
-                ? serverSession.user.user_metadata.email_verified === true
-                  ? "Yes"
-                  : "No"
-                : ""}
+            <p className="text-orange-700">
+              Verified:-
+              <span className="text-gray-700">
+                {serverSession?.user?.app_metadata?.provider === "github"
+                  ? serverSession.user.user_metadata.email_verified === true
+                    ? "Yes"
+                    : "No"
+                  : ""}
+              </span>
             </p>
             <div className="card-actions justify-end" onClick={signOut}>
               <button className="btn  bg-orange-500 text-white hover:bg-orange-600">
