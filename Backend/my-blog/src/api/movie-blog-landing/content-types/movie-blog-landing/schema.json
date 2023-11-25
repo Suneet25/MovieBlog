@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "movie_blog_landings",
+  "info": {
+    "singularName": "movie-blog-landing",
+    "pluralName": "movie-blog-landings",
+    "displayName": "MovieBlogLanding"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Heading": {
+      "type": "string"
+    },
+    "Content": {
+      "type": "text"
+    },
+    "Image": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}
