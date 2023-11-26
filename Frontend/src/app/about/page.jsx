@@ -10,7 +10,7 @@ const About = async () => {
   let blogMovies = await fetchBlogs(`&filters[Category][$eq]=Movie`);
 
   return (
-    <div className="max-w-7xl m-auto py-10 px-10 md:px-0 lg:px-0 ">
+    <div className="max-w-7xl m-auto py-10 px-10  lg:px-0 ">
       <h1 className="font-semibold text-3xl text-gray-700">About</h1>
       <div className="mt-5 flex flex-col md:flex-row lg:flex-row gap-5">
         <div className="rounded-lg overflow-hidden shadow-lg py-10 px-10">
@@ -50,10 +50,12 @@ const About = async () => {
             </div>
           </div>
         </div>
-        <div className="w-[500px] flex flex-col gap-3">
-          <div className="shadow-lg rounded-lg py-10 px-8">
-            <h1 className="text-xl mt-5 text-gray-700">Animes you can follow</h1>
-            <div className="h-96  carousel carousel-vertical rounded-box mt-3">
+        <div className=" w-[250px] lg:w-[500px] md:w-[500px]  flex flex-col gap-3">
+          <div className="shadow-lg rounded-lg py-2  px-8">
+            <h1 className="text-center  text-gray-700 text-sm">
+              Animes you can follow
+            </h1>
+            <div className="h-96  carousel carousel-vertical rounded-md mt-3  ">
               {blogs.map((blog) => (
                 <div className="carousel-item h-full">
                   <Image
@@ -68,11 +70,13 @@ const About = async () => {
               ))}
             </div>
           </div>
-          <div className="shadow-lg rounded-lg py-10 px-8">
-            <h1 className="text-xl mt-5 text-gray-700">Movies you can follow</h1>
-            <div className="h-96  carousel carousel-vertical rounded-box mt-3">
+          <div className="shadow-lg rounded-lg py-2  px-8">
+            <h1 className="text-center  text-gray-700 text-sm">
+              Movies you can follow
+            </h1>
+            <div className="h-96  carousel carousel-vertical rounded-md mt-3">
               {blogMovies.map((blog) => (
-                <div className="carousel-item h-full">
+                <div className="carousel-item h-full ">
                   <Image
                     width={500}
                     height={500}

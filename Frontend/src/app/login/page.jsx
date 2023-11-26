@@ -1,18 +1,16 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { FaGithub, FaGoogle } from "react-icons/fa";
 import Link from "next/link";
 import { useAuth } from "@/components/providers/supabase-auth-provider";
-import { notify } from "@/components/Alert";
 import { ToastContainer, toast } from "react-toastify";
+import GoogleButton from "react-google-button";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState(null);
-  const { signInWithPassword, signInWithGithub, signInWithGoogle, user } =
+  const { signInWithPassword, signInWithGoogle, user } =
     useAuth();
 
   let router = useRouter();
@@ -29,28 +27,10 @@ function Login() {
     event.preventDefault();
     try {
       const { data, error } = await signInWithPassword(email, password);
-      if (!error) {
-        setError(null);
-        setTimeout(
-          () =>
-            toast.success("Login successful", {
-              position: "top-center",
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            }),
-          1000
-        );
-
-      }
+ 
       if (error) {
         setError(error);
       }
- 
     } catch (error) {
       console.log("Somthing went wrong while login with email");
     }
@@ -65,11 +45,11 @@ function Login() {
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <ToastContainer />
       <div className="bg-white p-8 rounded-lg shadow-md w-full sm:w-96">
-        <h2 className="text-2xl font-semibold mb-6">Login</h2>
+        <h2 className="text-2xl font-semibold mb-6 text-gray-700">Login</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="email" className="block text-gray-600 font-medium">
-              Email
+              Email<span className="text-red-500">*</span>
             </label>
             <input
               type="email"
@@ -86,7 +66,7 @@ function Login() {
               htmlFor="password"
               className="block text-gray-600 font-medium"
             >
-              Password
+              Password<span className="text-red-500">*</span>
             </label>
             <input
               type="password"
@@ -105,28 +85,17 @@ function Login() {
             Login
           </button>
         </form>
-        <div className="flex place-content-evenly items-center gap-10 mt-5">
-          <div>
-            <button
-              onClick={signInWithGithub}
-              className="  bg-gray-800 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded-lg flex items-center"
-            >
-              <div className="flex content-between items-center">
-                <FaGithub className="mr-2 " />
-                <span> Github</span>
-              </div>
-            </button>
-          </div>
 
-          <div>
-            <button
-              onClick={signInWithGoogle}
-              className="text-center  flex items-center space-x-2 bg-blue-600 font-semibold text-white py-2 px-4 rounded-lg"
-            >
-              <FaGoogle className="text-xl" />
-              <span>Google</span>
-            </button>
-          </div>
+        <div className="flex content-center items-center mt-5 rounded-lg overflow-hidden ">
+        
+          <GoogleButton
+            style={{
+              width: 600,
+              borderRadius: "10px",
+            
+            }}
+            onClick={signInWithGoogle}
+          />
         </div>
 
         <p className="mt-5">

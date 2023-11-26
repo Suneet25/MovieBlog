@@ -1,18 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
-import createClient from "../../../utils/supabase-browser";
-import { ToastContainer, toast } from "react-toastify";
+
+import { ToastInfo } from "@/components/Toast";
+import { useAuth } from "@/components/providers/supabase-auth-provider";
+
 function page() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
-  let router = useRouter();
+  let { SignUp } = useAuth();
 
   // instantiate supabase client
-  let [supabase] = useState(() => createClient());
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
   };
@@ -20,64 +21,28 @@ function page() {
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
   };
+  const handleConfirmPasswordChange = (event) => {
+    setConfirmPassword(event.target.value);
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    if (password !== confirmPassword) {
+      ToastInfo("Password should match");
+      return;
+    }
     // sends a sign up request to supabase email provider
-    let { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: `${location.origin}/api/auth/callback`,
-      },
-    });
-    if (error) {
-      setTimeout(
-        () =>
-          toast.error(error.message, {
-            position: "top-center",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          }),
-        1000
-      );
-    }
-    if (data) {
-      console.log("DATA", data);
-      setTimeout(
-        () =>
-          toast.success("signup successful", {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          }),
-        1000
-      );
-      router.push("/login");
-    }
-
+    SignUp(email, password);
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <ToastContainer />
       <div className="bg-white p-8 rounded-lg shadow-md w-full sm:w-96">
-        <h2 className="text-2xl font-semibold mb-6">Sign-up</h2>
+        <h2 className="text-2xl font-semibold mb-6 text-gray-700">Sign-up</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="email" className="block text-gray-600 font-medium">
-              Email
+              Email<span className="text-red-500">*</span>
             </label>
             <input
               type="email"
@@ -94,7 +59,7 @@ function page() {
               htmlFor="password"
               className="block text-gray-600 font-medium"
             >
-              Password
+              Password<span className="text-red-500">*</span>
             </label>
             <input
               type="password"
@@ -102,6 +67,23 @@ function page() {
               name="password"
               value={password}
               onChange={handlePasswordChange}
+              className="w-full border  border-gray-300 rounded-lg py-2 px-3 mt-1  focus:outline-none focus:ring focus:ring-indigo-200 bg-white text-black"
+              required
+            />
+          </div>
+          <div className="mb-6">
+            <label
+              htmlFor="confirm-password"
+              className="block text-gray-600 font-medium"
+            >
+              Confirm Password<span className="text-red-500">*</span>
+            </label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={confirmPassword}
+              onChange={handleConfirmPasswordChange}
               className="w-full border  border-gray-300 rounded-lg py-2 px-3 mt-1  focus:outline-none focus:ring focus:ring-indigo-200 bg-white text-black"
               required
             />

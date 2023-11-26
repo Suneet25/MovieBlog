@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics, logEvent } from "firebase/analytics";
+import { getAnalytics, logEvent as logFbEvent } from "firebase/analytics";
 
 //trecking id or config we get from firebase
 const firebaseConfig = {
@@ -21,5 +21,7 @@ const app = initializeApp(firebaseConfig);
 if (app.name && typeof window !== "undefined") {
   analytics = getAnalytics(app);
 }
+
+const logEvent = (eventName, eventParams) => logFbEvent(analytics, eventName, eventParams);
 
 export { logEvent, analytics };

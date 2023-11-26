@@ -1,27 +1,91 @@
 "use client";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 
 import config from "@/config";
-import SimilarMovieCard from "./SimilarMovieCard";
+
+import BlogDetailsCard from "./BlogDetailsCard";
+
+import ImageSkeleton from "./ImageSkeleton";
+import {
+  FacebookShare,
+  TelegramShare,
+  TwitterShare,
+  WhatsappShare,
+} from "./SocialShare";
 let Genres = ["Scifi", "Adventure", "Action"];
 
 const BlogDetails = ({ blog }) => {
+  let blogCardData = [
+    { id: 1, main: "Budget", attrib: blog?.attributes.Budget },
+    { id: 2, main: "Status", attrib: blog?.attributes.Status },
+    { id: 3, main: "Runtime", attrib: blog?.attributes.Runtime },
+    { id: 4, main: "Release Date", attrib: blog?.attributes.ReleaseDate },
+    { id: 5, main: "Revenue", attrib: blog?.attributes.Revenue },
+    {
+      id: 6,
+      main: "Original Language",
+      attrib: blog?.attributes.OriginalLanguage,
+    },
+    { id: 7, main: "Rating", attrib: blog?.attributes.Rating },
+    { id: 8, main: "Country", attrib: blog?.attributes.Country },
+  ];
+  let [loaded, setLoaded] = useState(false);
   return (
     <div className="max-w-7xl m-auto  py-5 px-5 lg:px-0">
       <h1 className="font-semibold text-3xl"></h1>
       <div className="flex flex-wrap gap-x-40 mt-5 ">
         <div className="h-90 w-90 rounded-lg overflow-hidden">
-          <Image
-            src={`${config.api}${blog.attributes.Thumbnail.data.attributes.url}`}
-            layout="fixed"
-            width={500}
-            height={400}
-            style={{ width: "400px", height: "600px" }}
-          />
+          <div>
+            {!loaded && <ImageSkeleton />}
+            <Image
+              src={`${config.api}${blog?.attributes.Thumbnail.data.attributes.url}`}
+              layout="fixed"
+              width={400}
+              height={600}
+              alt="Thumbnail Image"
+              style={{
+                width: "400px",
+                height: "600px",
+                opacity: loaded ? "1" : "0",
+              }}
+              loading="lazy"
+              onLoad={(e) => setLoaded(true)}
+            />
+          </div>
         </div>
         <div className="w-[600px]">
-          <h1 className="font-bold text-4xl text-gray-700">{blog.attributes.Title}</h1>
+          <div className="flex justify-between items-center">
+            <h1 className="font-bold text-4xl text-gray-700">
+              {blog?.attributes.Title}
+            </h1>
+            <div className="flex justify-center items-center gap-2">
+              <div>
+                <FacebookShare
+                  url={`http://localhost:3000/animes/${blog?.attributes.slug}`}
+                  title={blog?.attributes.Title}
+                />
+              </div>
+              <div>
+                <TelegramShare
+                  url={`http://localhost:3000/animes/${blog?.attributes.slug}`}
+                  title={blog?.attributes.Title}
+                />
+              </div>
+              <div>
+                <TwitterShare
+                  url={`http://localhost:3000/animes/${blog?.attributes.slug}`}
+                  title={blog?.attributes.Title}
+                />
+              </div>
+              <div>
+                <WhatsappShare
+                  url={`http://localhost:3000/animes/${blog?.attributes.slug}`}
+                  title={blog?.attributes.Title}
+                />
+              </div>
+            </div>
+          </div>
 
           {/* Genre */}
           <div className="mt-3">
@@ -44,63 +108,32 @@ const BlogDetails = ({ blog }) => {
             <h2 className="font-semibold text-orange-700">Overview</h2>
             <div
               className="mt-3"
-              dangerouslySetInnerHTML={{ __html: blog.attributes.Content }}
+              dangerouslySetInnerHTML={{ __html: blog?.attributes.Content }}
             ></div>
           </div>
 
           {/* About */}
           <div className="mt-5">
             <h2 className="font-semibold text-orange-700">About</h2>
-            <p className="mt-3">{blog.attributes.Summury}</p>
+            <p className="mt-3">{blog?.attributes.Summury}</p>
           </div>
           {/* Others */}
           <div className="mt-5">
             <h2 className="font-semibold">Others</h2>
             <div className="mt-5 grid lg:grid-cols-2 grid-cols-1 gap-3 ">
-              <div className="flex items-center justify-between shadow-lg px-2 py-2 rounded-lg">
-                <p className="text-teal-500 font-semibold">Budget :-</p>
-
-                <p className="text-gray-700">{blog.attributes.Budget}</p>
-              </div>
-              <div className="flex items-center justify-between shadow-lg px-2 py-2 rounded-lg">
-                <p className="text-teal-500 font-semibold">Status :-</p>
-                <p className="text-gray-700">{blog.attributes.Status}</p>
-              </div>
-              <div className="flex items-center justify-between shadow-lg px-2 py-2 rounded-lg">
-                <p className="text-teal-500 font-semibold">Runtime :-</p>
-                <p className="text-gray-700">{blog.attributes.Runtime}</p>
-              </div>
-              <div className="flex items-center justify-between shadow-lg px-2 py-2 rounded-lg">
-                <p className="text-teal-500 font-semibold">Release Date :-</p>
-                <p className="text-gray-700">{blog.attributes.ReleaseDate}</p>
-              </div>
-              <div className="flex items-center justify-between shadow-lg px-2 py-2 rounded-lg">
-                <p className="text-teal-500 font-semibold">Revenue :-</p>
-                <p className="text-gray-700">{blog.attributes.Revenue}</p>
-              </div>
-              <div className="flex items-center justify-between shadow-lg px-2 py-2 rounded-lg">
-                <p className="text-teal-500 font-semibold">
-                  Original Language :-
-                </p>
-                <p className="text-gray-700">
-                  {blog.attributes.OriginalLanguage}
-                </p>
-              </div>
-              <div className="flex items-center justify-between shadow-lg px-2 py-2 rounded-lg">
-                <p className="text-teal-500 font-semibold">Rating :-</p>
-                <p className="text-gray-700">{blog.attributes.Rating}</p>
-              </div>
-              <div className="flex items-center justify-between shadow-lg px-2 py-2 rounded-lg">
-                <p className="text-teal-500 font-semibold">Country :-</p>
-                <p className="text-gray-700">{blog.attributes.Country}</p>
-              </div>
+              {blogCardData.map((blog) => (
+                <BlogDetailsCard
+                  key={blog.id}
+                  main={blog.main}
+                  attrib={blog.attrib}
+                />
+              ))}
             </div>
           </div>
         </div>
       </div>
       {/* Similar Animes */}
-      <SimilarMovieCard/>
-
+      {/* <SimilarMovieCard /> */}
     </div>
   );
 };

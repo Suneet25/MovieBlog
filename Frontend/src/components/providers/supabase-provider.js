@@ -7,7 +7,6 @@ let Context = createContext(undefined);
 
 export function SupabaseProvider({ children }) {
   let [supabase] = useState(() => createClient());
-console.log("HEHE",supabase);
   return (
     <Context.Provider value={{ supabase }}>
       <>{children}</>

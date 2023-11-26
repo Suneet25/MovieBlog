@@ -36,41 +36,4 @@ export const footerSocials = [
   },
 ];
 
-export const movieBlogs = [
-  {
-    id: 1,
-    heading: "1.IMBd",
-    content:
-      "Most people have heard of IMBd. If you’ve ever wondered, ‘Who played Yoda?’ or ‘What movies has Sandra Bullock starred in?’, you’ve been to IMBd. The site offers profiles, cast lists, plot summaries, movie news, and reviews. Three million fans follow the site on Instagram for trailers like this one to “Marry Me” and exclusive interviews like this one with Kristen Bell. ",
-    src: "https://wallpaperaccess.com/full/1510470.jpg",
-  },
-  {
-    id: 2,
-    heading: "2.MovieWeb",
-    content:
-      "For all the updates on your favorite movies, MovieWeb is the place to go. Fans find information on casting and release dates along with trailers and clips of their favorite flicks. With its start dating back to 1995, it’s a trusted source for movie information. Its Instagram is full of updates, like news of a “Christmas Story” sequel and first looks of cult favorite, “Hocus Pocus 2.” ",
-    src: "https://images.hdqwalls.com/download/oppenheimer-2w-1920x1080.jpg",
-  },
-  {
-    id: 3,
-    heading: "3.CinemaBlend",
-    content:
-      "A popular entertainment site, CinemaBlend is all about movies, hit TV shows and the best hits to binge. With 5-10 posts added to the site each day and an Instagram account full of headlines like Dakota Johnson joining Spiderman’s Universe, fans can’t get enough of the juicy news. .” ",
-    src: "https://www.escapistmagazine.com/wp-content/uploads/2020/07/inception1.jpg?resize=800%2C400",
-  },
-  {
-    id: 4,
-    heading: "4.Rotten Tomatoes",
-    content:
-      "Need a movie recommendation? Head to Rotten Tomatoes. It’s one of the oldest and most trusted online review sites for movies, with its start reaching back to 1998. In addition to reading a review or leaving one, fans also get news and a YouTube channel full of content like the best Black movies and Andrew Garfield’s five favorite musicals. ",
-    src: "https://flxt.tmsimg.com/assets/p17758177_v_h8_ad.jpg",
-  },
-  {
-    id: 5,
-    heading: "5.Screen Rant",
-    content:
-      "Wondering if the latest hit movie is appropriate for your child? Common Sense Media can help. This site provides reviews with families in mind along with age-based ratings. Parents and educators can also search for age-appropriate movies and TV shows. The nonprofit’s Instagram account has a list of cold weather movies to watch and reviews like this one for “Moonfall.”",
-    src: "https://observer.com/wp-content/uploads/sites/2/2021/01/the-batman-trailer.jpg?resize=768,432",
-  },
-];
 

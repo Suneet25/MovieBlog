@@ -1,10 +1,12 @@
 "use client";
 import { createContext, useState, useContext, useEffect } from "react";
-import { useSupabase } from "./supabase-provider";
+
 import useSWR from "swr";
 import { useRouter } from "next/navigation";
 import createClient from "../../../utils/supabase-browser";
-import { toast } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.min.css";
+import { ToastError, ToastSuccess } from "../Toast";
 
 let Context = createContext();
 
@@ -32,23 +34,28 @@ export function SupabaseAuthProvider({ serverSession, children }) {
     mutate,
   } = useSWR(serverSession ? "profile-context" : null, getUser);
 
+  //Sign-up
+  let SignUp = async (email, password) => {
+    let { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: `${location.origin}/api/auth/callback`,
+      },
+    });
+    if (error) {
+      setTimeout(() => ToastError(error.message), 1000);
+      return error.message;
+    }
+    if (!error) {
+      setTimeout(() => ToastSuccess("signup successful"), 1000);
+      router.push("/login");
+    }
+  };
   //Sign-out
   let signOut = async () => {
     await supabase.auth.signOut();
-    setTimeout(
-      () =>
-        toast.success("You are successfully logged out", {
-          position: "top-center",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        }),
-      1000
-    );
+    setTimeout(() => ToastSuccess("You are successfully logged out"), 1000);
     router.push("/login");
   };
 
@@ -56,17 +63,7 @@ export function SupabaseAuthProvider({ serverSession, children }) {
   let signInWithGithub = async () => {
     await supabase.auth.signInWithOAuth({ provider: "github" });
     setTimeout(
-      () =>
-        toast.success("You are successfully logged in with Github", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        }),
+      () => ToastSuccess("You are successfully logged in with Github"),
       1000
     );
   };
@@ -75,17 +72,7 @@ export function SupabaseAuthProvider({ serverSession, children }) {
   let signInWithGoogle = async () => {
     await supabase.auth.signInWithOAuth({ provider: "google" });
     setTimeout(
-      () =>
-        toast.success("You are successfully logged in with Google", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        }),
+      () => ToastSuccess("You are successfully logged in with Google"),
       1000
     );
   };
@@ -93,43 +80,17 @@ export function SupabaseAuthProvider({ serverSession, children }) {
   //Signin With Email And Password
 
   let signInWithPassword = async (email, password) => {
-    console.log("RECIEVED", email, password);
     let { error } = await supabase.auth.signInWithPassword({
       email: email,
       password: password,
     });
     if (error) {
-      setTimeout(
-        () =>
-          toast.error(error.message, {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          }),
-        1000
-      );
+      setTimeout(() => ToastError(error.message), 1000);
       return error.message;
-
     }
-    setTimeout(
-      () =>
-        toast.success("You are successfully logged in", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        }),
-      1000
-    );
+    if (!error) {
+      ToastSuccess("You are successfully logged in");
+    }
     return null;
   };
 
@@ -152,8 +113,10 @@ export function SupabaseAuthProvider({ serverSession, children }) {
     error,
     isLoading,
     mutate,
+    SignUp,
     signInWithPassword,
     signOut,
+
     signInWithGithub,
     signInWithGoogle,
   };

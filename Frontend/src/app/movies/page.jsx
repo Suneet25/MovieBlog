@@ -10,7 +10,7 @@ export default async function Home() {
 
   console.log("MovieBlog", blogs);
   return (
-    <div className="row  max-w-7xl m-auto py-10">
+    <div className="row  max-w-7xl m-auto px-5  lg:px-0 py-10">
       <Suspense fallback={<Loading />}>
         <h1 className="font-semibold text-3xl text-gray-700">Movies</h1>
         <div className="mt-5  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -18,10 +18,11 @@ export default async function Home() {
             return (
               <Card
                 index={index}
-                category={blog.attributes.Category}
-                title={blog.attributes.Title}
-                href={`movies/${blog.attributes.slug}`}
-                imageUrl={`${config.api}${blog.attributes.FeaturedImage.data.attributes.url}`}
+                category={blog?.attributes.Category}
+                title={blog?.attributes.Title}
+                href={`movies/${blog?.attributes.slug}`}
+                summury={blog?.attributes.Summury}
+                imageUrl={`${config.api}${blog?.attributes.FeaturedImage.data.attributes.url}`}
               />
             );
           })}

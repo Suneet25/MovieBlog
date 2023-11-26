@@ -17,6 +17,7 @@ const SimilarMovieCard = async () => {
             layout="fixed"
             width={500}
             height={400}
+            alt="Blog Image"
             style={{ width: "10rem", height: "10rem" }}
             src={`${config.api}${blog.attributes.Thumbnail.data.attributes.url}`}
           />

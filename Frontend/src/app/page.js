@@ -1,28 +1,30 @@
-import { fetchBlogs } from "@/helpers/fetch-blogs";
-import config from "@/config";
-import Image from "next/image";
 import React from "react";
 import { movieBlogs } from "@/helpers/data";
-import SimilarMovieCard from "@/components/SimilarMovieCard";
+import Image from "next/image";
+import Image0 from "../Assets/LandingPage/Image0.jpg";
+import { fetchLandingPageContent } from "@/helpers/fetch-blogs";
+import config from "@/config";
 
 const Home = async () => {
-  let blogs = await fetchBlogs(`&filters[Category][$eq]=Anime`);
-  let blogMovies = await fetchBlogs(`&filters[Category][$eq]=Movie`);
+  let blogs = await fetchLandingPageContent();
 
   return (
-    <div className="max-w-7xl m-auto py-10 font-semibold  text-4xl lg:text-5xl text-center px-10">
-      <h1 className="text-gray-700">Top 5 Movie Blogs for Film Fans to Follow</h1>
+    <div className="max-w-7xl m-auto py-10 font-semibold  text-4xl lg:text-5xl text-center px-10  lg:px-0">
+      <h1 className="text-gray-700">
+        Top 5 Movie Blogs for Film Fans to Follow
+      </h1>
       <div className="rounded-lg overflow-hidden mt-10  ">
-        <img
-          src={
-            "https://d27fp5ulgfd7w2.cloudfront.net/wp-content/uploads/2019/01/02134600/Movie-Blogs-1.jpg"
-          }
+        <Image
+          src={Image0}
           width={1600}
-          height={600}
+          height={500}
+          objectFit="center"
+          alt="Banner"
+          priority
         />
       </div>
       <div>
-        <p className="text-left text-lg text-black mt-5">
+        <p className="text-left text-lg text-black mt-3">
           Movie fans, unite! Whether you’re a fan of blockbuster hits or indie
           films, there are a handful of top-rated movie blogs that can keep you
           in-the-know. Many of the blogs focus on headline news and casting
@@ -31,51 +33,28 @@ const Home = async () => {
         </p>
       </div>
       <div className="mt-5">
-        {movieBlogs?.map((data) => {
+        {blogs?.map((data) => {
           return (
             <div key={data.id}>
-              <h1 className="text-3xl mt-5 text-orange-700">{data.heading}</h1>
+              <h1 className="text-3xl mt-5 text-orange-700">
+                {data.id}.{data.attributes.Heading}
+              </h1>
               <div className="rounded-lg overflow-hidden mt-10">
-                <img src={data.src} width={1600} height={600} />
+                <Image
+                  src={`${config.api}${data.attributes.Image.data.attributes.url}`}
+                  width={1600}
+                  height={500}
+                  alt="LandingPage Image"
+                  // loading="lazy"
+                />
               </div>
-              <p className="text-lg text-gray-600 text-left">{data.content}</p>
+              <p className="text-lg text-gray-600 text-left mt-3">
+                {data.attributes.Content}
+              </p>
             </div>
           );
         })}
       </div>
-      {/* <h1 className="text-3xl mt-5">Animes you can follow</h1>
-      <div className="carousel rounded-box mt-5">
-        <div className="carousel-item">
-          {blogs.map((blog) => (
-            <Image
-              width={500}
-              height={500}
-              style={{ height: "400px", width: "400px" }}
-              key={blog.id}
-              src={`${config.api}${blog.attributes.FeaturedImage.data.attributes.url}`}
-              alt="Burger"
-            />
-          ))}
-        </div>
-      </div>
-      <h1 className="text-3xl mt-5">Movies you can follow</h1> */}
-      {/* <div className="carousel rounded-box mt-5">
-        <div className="carousel-item">
-          {blogMovies.map((blog) => (
-            <Image
-              width={500}
-              height={500}
-              style={{ height: "400px", width: "400px" }}
-              key={blog.id}
-              src={`${config.api}${blog.attributes.FeaturedImage.data.attributes.url}`}
-              alt="Burger"
-            />
-          ))}
-        </div>
-      </div> */}
-      {/* <SimilarMovieCard/> */}
-     
-
     </div>
   );
 };
