@@ -1,5 +1,6 @@
 "use client";
 import { ToastInfo, ToastSuccess } from "@/components/Toast";
+import axios from "axios";
 import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
@@ -23,7 +24,11 @@ const Contact = () => {
       ToastInfo("Please fill the reaquired field");
       return;
     }
-
+    axios({
+      method: "POST",
+      url: "https://getform.io/f/f82fb6c1-e5a2-4828-a19b-fb6345e9febc",
+      data: data,
+    });
     ToastSuccess("Message sent");
 
     setData({ name: "", email: "", website: "", comment: "" });
@@ -48,6 +53,7 @@ const Contact = () => {
             Name<span className="text-red">*</span>
           </label>
           <input
+            type="text"
             name="name"
             value={data.name}
             onChange={handleChange}
@@ -57,6 +63,7 @@ const Contact = () => {
             Email<span className="text-red">*</span>
           </label>
           <input
+            type="email"
             name="email"
             value={data.email}
             onChange={handleChange}
@@ -66,6 +73,7 @@ const Contact = () => {
             Website<span className="text-red">*</span>
           </label>
           <input
+            type="text"
             name="website"
             value={data.website}
             onChange={handleChange}
@@ -73,12 +81,13 @@ const Contact = () => {
           />
           <label className="text-orange-700">Comment</label>
           <textarea
+            type="text"
             name="comment"
             value={data.comment}
             onChange={handleChange}
             className="bg-white border-2 border-gray-400 py-5 px-3 rounded-lg"
           />
-          <a href="mailto:suneetpanigrahi53@gmail.com">
+          <a>
             <button
               type="submit"
               className="px-3 py-3 bg-green-600 rounded-lg text-white font-semibold hover:bg-green-800"

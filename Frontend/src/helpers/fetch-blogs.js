@@ -6,8 +6,7 @@ export let fetchBlogs = async (filter) => {
     },
   };
   let request = await fetch(
-    `${config.api}/api/blogs?populate=*&${filter}&per_page=30`,
-    reqOption
+    `${config.api}/api/blogs?populate=*&${filter}&per_page=30`
   );
   let response = await request.json();
   return response.data;

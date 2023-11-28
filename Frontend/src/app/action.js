@@ -1,9 +1,9 @@
-'use server'
- 
-import { cookies } from 'next/headers'
- 
-async function create(data) {
-  cookies().delete('name')
+"use server";
+
+import { cookies } from "next/headers";
+
+async function create() {
+  cookies().delete("sb-vhleaockfvrghnjscbzk-auth-token");
 }
 
-export {create}
+export { create };

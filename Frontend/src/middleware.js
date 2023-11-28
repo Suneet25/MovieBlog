@@ -8,5 +8,11 @@ export async function middleware(req) {
 }
 
 export const config = {
-  matcher: ["/animes", "/animes/:path*", "/movies", "/movies/:path*"],
+  matcher: [
+    "/animes",
+    "/animes/:path*",
+    "/movies",
+    "/movies/:path*",
+    "/profile",
+  ],
 };

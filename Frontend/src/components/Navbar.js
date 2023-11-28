@@ -6,18 +6,24 @@ import { useRouter, usePathname } from "next/navigation";
 import React, { useState } from "react";
 import { useAuth } from "./providers/supabase-auth-provider";
 import { logEvent } from "@/app/firebase";
+import { create } from "@/app/action";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   let [category, setCategory] = useState("");
 
   let { signOut, user, serverSession } = useAuth();
-
+  console.log("USER", serverSession);
   const path = usePathname();
   let router = useRouter();
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  let handleLogout = () => {
+    signOut();
+    create();
   };
   return (
     <nav className="bg-amber-50 p-4 sticky top-0 z-10 shadow-lg ">
@@ -79,7 +85,7 @@ const Navbar = () => {
               <div className="flex justify-center items-center gap-5">
                 <div>
                   <button
-                    onClick={signOut}
+                    onClick={handleLogout}
                     className="text-white font-bold bg-orange-500 py-1 px-2 rounded-lg"
                     style={{
                       borderBottom: path === "/login" ? "3px solid orange" : "",
